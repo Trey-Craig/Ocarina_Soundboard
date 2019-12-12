@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Link's Ocarina</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>Play Songs From The Genre-Defining Classic: The Legend of Zelda: Ocarina of Time!!
+      <h1>(Click a song title to hear the full version!)</h1>
+    </header>
+
+    <div class="keys">
+        <div data-key="87" class="key">
+          <kbd>W</kbd>
+          <span class="sound"><img src="img/up.png" alt="N64 Up C button"></span>
+        </div>
+        <div data-key="83" class="key">
+          <kbd>S</kbd>
+          <span class="sound"><img src="img/down.png" alt="N64 Down C button"></span>
+        </div>
+        <div data-key="65" class="key">
+          <kbd>A</kbd>
+          <span class="sound"><img src="img/left.png" alt="N64 Left C button"></span>
+        </div>
+        <div data-key="68" class="key">
+          <kbd>D</kbd>
+          <span class="sound"><img src="img/right.png" alt="N64 Right C button"></span>
+        </div>
+        <div data-key="32" class="key">
+          <kbd>Space</kbd>
+          <span class="sound"><img src="img/A.png" alt="N64 A button"></span>
+        </div>
+        
+    <div class="songlist">
+      
+      <p onclick="playAudio('sounds/Suns-Song.mp3')">Sun's Song</p>
+      <p class= "text-center">
+        <img src="img/right.png">
+        <img src="img/down.png">
+        <img src="img/up.png">
+        <img src="img/right.png">
+        <img src="img/down.png">
+        <img src="img/up.png">
+      </p>
+
+      <p onclick="playAudio('sounds/Song-of-Storms.mp3')">Song of Storms</p>
+      <p class= "text-center">
+        <img src="img/A.png">
+        <img src="img/down.png">
+        <img src="img/up.png">
+        <img src="img/A.png">
+        <img src="img/down.png">
+        <img src="img/up.png">
+      </p>
+
+      <p onclick="playAudio('sounds/Sarias-Song.mp3')">Saria's Song</p>
+      <p class= "text-center">
+        <img src="img/down.png">
+        <img src="img/right.png">
+        <img src="img/left.png">
+        <img src="img/down.png">
+        <img src="img/right.png">
+        <img src="img/left.png">
+      </p>
+
+      <p onclick="playAudio('sounds/Eponas-Song.mp3')">Epona's Song</p>
+      <p class= "text-center">
+        <img src="img/up.png">
+        <img src="img/left.png">
+        <img src="img/right.png">
+        <img src="img/up.png">
+        <img src="img/left.png">
+        <img src="img/right.png">
+      </p>
+
+    </div>
+  
+    
+  </div>
+
+  <audio data-key="32" src="sounds/ocarina_A.wav"></audio>
+  <audio data-key="83" src="sounds/ocarina_down.wav"></audio>
+  <audio data-key="68" src="sounds/ocarina_right.wav"></audio>
+  <audio data-key="87" src="sounds/ocarina_up.wav"></audio>
+  <audio data-key="65" src="sounds/ocarina_left.wav"></audio>
+  
+
+  <script>
+    //Attach an event listener to the window
+    window.addEventListener('keydown', function(e){
+      //select corresponding audio
+      const audio = document.querySelector(`audio[data-key = "${e.keyCode}"]`)
+      //select corresponding key
+      const key = document.querySelector(`.key[data-key = "${e.keyCode}"]`)
+      if (!audio){
+        return //stop the function from running all together
+      }
+      audio.currentTime = 0 // rewind to the start
+      audio.play()
+      
+      key.classList.add('playing')
+      
+    })
+    const removeTransition = function(e){
+      if (e.propertyName !== 'transform') //skip if not a transform
+        return
+      this.classList.remove('playing')
+    }
+    //select every key on the page to listen on each one
+    const keys = document.querySelectorAll('.key')
+    console.log(keys)
+    keys.forEach(function(key){
+      key.addEventListener('transitionend', removeTransition)
+    })
+    //create the removeTransition function to remove the added class
+    
+    function playAudio(url){
+      var a= new Audio(url);
+      a.play();
+      
+    }
+
+  </script>
+
+
+</body>
+
+</html>
